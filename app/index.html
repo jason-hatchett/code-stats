@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="codeStats" >
+  <head>
+    <h1> Angular Setup </h1>
+  </head>
+  <body>
+    
+
+    <div ng-controller="StatController">
+
+      <div ng-repeat="item in items">
+
+        <div ng-show="item.screenShown">
+    
+            <h3>
+              {{item.name}}
+            </h3>
+            <p>
+              {{item.count}}
+              {{item.tracked}}
+            </p>
+  
+        </div>
+      </div>
+    </div>
+
+    <script src="vendors/angular.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/data.js"></script>
+    <script src="scripts/controllers/statCtrl.js"></script>
+    
+  </body>
+</html>
