@@ -6,33 +6,32 @@
     return {
       sharedData: {
         items: []
-       /*items: [
-          {
-            name: 'first',
-            body:{
-              count: 20,
-              tracked: 'yes'
-            },
-            screenShown: true
-          },
-          {
-            name: 'second',
-            body:{
-              count: 5,
-              tracked: 'no'
-            },
-            screenShown: false
-          },
-          {
-            name: 'third',
-            body:{
-              count: 15,
-              tracked: 'no'
-            },
-            screenShown: true
-          }
-        ] */
       }
     }
    });
+
+   angular.module('codeStats.controllers')
+   .service('chartService',function(){
+    return {
+            options: {
+                chart: {
+                    type: 'column'
+                }
+            },
+            xAxis: {
+                categories: ['Solo']
+            },
+            series: [{
+                name: 'Item',
+                data: [ {"name":"test","x": 0 ,"y":1}]
+            }],
+            title: {
+                text: 'Code Comparison'
+            },
+            loading: false
+          }
+   });
+
+
+
 })();

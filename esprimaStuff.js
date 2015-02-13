@@ -31,7 +31,7 @@
     traverse(ast, function(node) {
 
       if (node.type == undefined){
-        console.log("LOOK AT ME", node)
+        
         addStatsEntry(node);
         functionsStats[node]++;
       }

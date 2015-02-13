@@ -7,7 +7,7 @@
     });
 
   angular.module('codeStats.controllers')
-    .controller('TextController',function(dataService, $http){
+    .controller('TextController',function(dataService, chartService, $http){
       this.snippet = {};
 
       this.addSnippet = function(){
@@ -34,12 +34,31 @@
             screenShown: true
           }
           dataService.sharedData.items.push(newItem);
-          
-        });
+          chartService.xAxis.categories = Object.keys(dataService.sharedData.items[0].body)
+          chartService.series[0].name = dataService.sharedData.items[0].name
+          chartService.series[0].data = objValues(dataService.sharedData.items[0].body)
 
+        });
         this.snippet = {};
 
       }
     });
+
+  angular.module('codeStats.controllers')
+    .controller('ChartController', function($scope, dataService, chartService){
+
+        $scope.chartConfig = chartService;
+
+    });
+
+
+  function objValues (obj) {
+    var results = []
+    for (var prop in obj) {
+      results.push(obj[prop])
+    }
+    return results;
+  }
+    
 
 }());
