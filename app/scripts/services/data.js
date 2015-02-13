@@ -5,26 +5,33 @@
    .service('dataService',function(){
     return {
       sharedData: {
-       items: [
+        items: []
+       /*items: [
           {
             name: 'first',
-            count: 20,
-            tracked: 'yes',
+            body:{
+              count: 20,
+              tracked: 'yes'
+            },
             screenShown: true
           },
           {
             name: 'second',
-            count: 5,
-            tracked: 'no',
+            body:{
+              count: 5,
+              tracked: 'no'
+            },
             screenShown: false
           },
           {
             name: 'third',
-            count: 15,
-            tracked: 'no',
+            body:{
+              count: 15,
+              tracked: 'no'
+            },
             screenShown: true
           }
-        ] 
+        ] */
       }
     }
    });

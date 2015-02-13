@@ -4,6 +4,28 @@
     <h1> Angular Setup </h1>
   </head>
   <body>
+
+    <form name="reviewForm" ng-controller="TextController as txtCtrl" ng-submit="txtCtrl.addSnippet()">
+
+      
+      <!--  Live Preview -->
+      <blockquote>
+        <strong>{{txtCtrl.snippet.name}}</strong>
+        {{txtCtrl.snippet.body}}
+      </blockquote>
+
+      <h4>Submit a Code Snippet</h4>
+      <fieldset class="form-group">
+        <input ng-model="txtCtrl.snippet.name" class="form-control" placeholder="Code Title Here" title="Name" />
+      </fieldset>
+      <fieldset class="form-group">
+        <textarea ng-model="txtCtrl.snippet.body" class="form-control" placeholder="Enter code here..." title="Code"></textarea>
+      </fieldset>
+      <fieldset class="form-group">
+        <input type="submit" class="btn btn-primary pull-right" value="Submit Code Snippet" />
+      </fieldset>
+
+    </form>
     
 
     <div ng-controller="StatController">
@@ -11,13 +33,13 @@
       <div ng-repeat="item in items">
 
         <div ng-show="item.screenShown">
-    
-            <h3>
-              {{item.name}}
-            </h3>
+
+          <h3>{{item.name}}</h3>
+
             <p>
-              {{item.count}}
-              {{item.tracked}}
+              <ul ng-repeat="(attribute, value) in item.body">
+                {{attribute}}: {{value}}
+              </ul>
             </p>
   
         </div>

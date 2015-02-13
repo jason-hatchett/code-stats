@@ -1,9 +1,17 @@
 var esprima = require('esprima');
 var fs = require('fs');
 
+var file = 'brian_code.js'
+var code = fs.readFileSync(file);
 
-var code = fs.readFileSync('brian_code.js');
 
+//return object analyze data inside item
+//name should be "brian_code.js"/filename/input name
+//embedded "output" item
+//maybe a default screenShow value of true or false
+//
+//
+// return { name: file, output: analyzeCode(code), screenShown: true}
 analyzeCode(code)
 
 function traverse(node, func) {
