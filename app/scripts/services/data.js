@@ -15,16 +15,31 @@
     return {
             options: {
                 chart: {
-                    type: 'column'
+                    type: 'column',
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Values',
+                    style: {
+                      fontSize: '15px',
+                      fontFamily: 'Verdana, sans-serif'
+                    }
                 }
             },
             xAxis: {
+                labels: {
+                  rotation: -45,
+                  style: {
+                      fontSize: '15px',
+                      fontFamily: 'Verdana, sans-serif',
+                      //bottomPadding : '15px'
+                  }
+                },
                 categories: ['Solo']
             },
-            series: [{
-                name: 'Item',
-                data: [ {"name":"test","x": 0 ,"y":1}]
-            }],
+            series: [],
             title: {
                 text: 'Code Comparison'
             },

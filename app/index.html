@@ -2,22 +2,51 @@
 <html ng-app="codeStats" >
   <head>
     <h1> Code Analysis </h1>
-
-    <div ng-controller="ChartController">
-        <highchart id="chart1" config="chartConfig"></highchart>
-    </div>
   </head>
   <body class="container">
+
+    <div ng-controller="StatController">
+
+      <div ng-controller="ChartController" ng-show="items.length" >
+        <highchart id="chart1" config="chartConfig"></highchart>
+      </div>
+
+          <section class="tab" ng-controller="TabController as tab" >
+            <ul class="nav nav-pills">
+              <li ng-repeat="item in items" ng-class="{ active: tab.isSet(item.name) }">
+                <a href ng-click="tab.setTab(item.name)">{{item.name}}</a>
+              </li>
+            </ul>
+            <div ng-repeat="item in items">
+            <div ng-show="tab.isSet(item.name)">
+              <h4>Code</h4>
+              <pre><code>{{item.code}}</code></pre>
+            </div>
+            </div>
+          </section>
+
+         <!-- 
+         <h3>{{item.name}}</h3>
+
+            <p>
+              <ul ng-repeat="(attribute, value) in item.body">
+                {{attribute}}: {{value}}
+              </ul>
+            </p> 
+        -->
+       
+      
+    </div>
 
     <div class="center-block">
 
     <form name="reviewForm" ng-controller="TextController as txtCtrl" ng-submit="txtCtrl.addSnippet()">
 
-      <!--  Live Preview -->
+      <!--  Live Preview
       <blockquote ng-show="txtCtrl.snippet.body.length">
         <strong>{{txtCtrl.snippet.name}}</strong>
         <pre><code>{{txtCtrl.snippet.body}}</code></pre>
-      </blockquote>
+      </blockquote>-->
 
       <h4>Submit a Code Snippet</h4>
       <fieldset class="form-group">
@@ -31,27 +60,6 @@
       </fieldset>
 
     </form>
-    
-   
-    <!--
-    <div ng-controller="StatController">
-
-      <div ng-repeat="item in items">
-
-        <div ng-show="item.screenShown">
-
-          <h3>{{item.name}}</h3>
-
-            <p>
-              <ul ng-repeat="(attribute, value) in item.body">
-                {{attribute}}: {{value}}
-              </ul>
-            </p>
-  
-        </div>
-      </div>
-    </div>
-    -->
 
   </div>
 
