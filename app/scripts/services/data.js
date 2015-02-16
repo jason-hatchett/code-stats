@@ -16,11 +16,14 @@
             options: {
                 chart: {
                     type: 'column',
+                    marginLeft: 55,
+                    marginBottom: 140
                 }
             },
             yAxis: {
                 min: 0,
                 title: {
+                    x: -25,
                     text: 'Values',
                     style: {
                       fontSize: '15px',
@@ -30,11 +33,11 @@
             },
             xAxis: {
                 labels: {
+                  
                   rotation: -45,
                   style: {
                       fontSize: '15px',
-                      fontFamily: 'Verdana, sans-serif',
-                      //bottomPadding : '15px'
+                      fontFamily: 'Verdana, sans-serif'
                   }
                 },
                 categories: []
