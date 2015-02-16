@@ -1,7 +1,7 @@
 var esprima = require('esprima');
 var fs = require('fs');
 
-var file = 'brian_code.js'
+var file = 'zerosum_code.js'
 var code = fs.readFileSync(file);
 
 
@@ -38,25 +38,60 @@ function analyzeCode(code) {
     var functionsStats = {};
     var addStatsEntry = function(funcName) {
         if (!functionsStats[funcName]) {
-            functionsStats[funcName] = {seen:0};
+            functionsStats[funcName] = 0;
         }
     };
 
-    traverse(ast, function(node) {
+    traverse(ast, function(node, depth) {
 
-        if (node.type == undefined){
-          console.log("LOOK AT ME", node)
-          addStatsEntry(node);
-          functionsStats[node].seen++;
+        if (node.type == "LogicExpression" || node.type == "BinaryExpression"){
+          addStatsEntry("Expressions");
+          functionsStats["Expressions"]++;
         }
-        else if (node.type == "CallExpression" && node.callee.name){
-          addStatsEntry(node.callee.name);
-          functionsStats[node.callee.name].seen++;
+        else if (node.type == "ForStatement" || node.type == "WhileStatement"){
+          addStatsEntry("Loops");
+          functionsStats["Loops"]++;
+
+            var nester = node;
+            var deep = 0;
+            while (nester.body && nester.body.body[0]){
+                deep++;
+                nester = nester.body.body[0];
+                if (nester.type == "ForStatement" || nester.type == "WhileStatement"){
+                    addStatsEntry("DeepestNested");
+                    if (functionsStats["DeepestNested"] < deep) {
+                        functionsStats["DeepestNested"] = deep;
+                    }
+                }
+            }
+            
         }
-        else{
-          addStatsEntry(node.type);
-          functionsStats[node.type].seen++;
+        else if (node.type == "AssignmentExpression"){
+          addStatsEntry("Assignments");
+          functionsStats["Assignments"]++;
         }
+        else if (node.type == "FunctionDeclaration"){
+          addStatsEntry("Functions");
+          functionsStats["Functions"]++;
+        }
+        else if (node.type == "IfStatement"){
+          addStatsEntry("Conditionals");
+          functionsStats["Conditionals"]++;
+        }
+        else if (node.type == "CallExpression"){
+          addStatsEntry("MethodCalls");
+          functionsStats["MethodCalls"]++;
+        }
+        else if (node.regex){
+          addStatsEntry("Regex");
+          functionsStats["Regex"]++;
+        }
+
+        if (node.type.indexOf("Statement") > -1){
+          addStatsEntry("TotalStatements");
+          functionsStats["TotalStatements"]++;
+        }
+        
         
     });
     processResults(functionsStats);
@@ -67,7 +102,7 @@ function processResults(results) {
     for (var name in results) {
         if (results.hasOwnProperty(name)) {
             var stats = results[name];
-            console.log(name, stats.seen); 
+            console.log(name, stats); 
         }
     }
 }
