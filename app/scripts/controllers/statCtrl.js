@@ -49,25 +49,31 @@
             screenShown: true
           }
           dataService.sharedData.items.push(newItem);
-          var last_idx = dataService.sharedData.items.length -1
-          chartService.xAxis.categories = Object.keys(dataService.sharedData.items[0].body)
-          chartService.series.push({
-            name: newItem.name,
-            data: objValues(newItem.body),
-            dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                x: 4,
-                y: 10,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black',
-                }
-            }
-          })
+          //debugger
+          chartService.xAxis.categories = remakeCategories(chartService.xAxis.categories, newItem.body)
+          //chartService.xAxis.categories = Object.keys(dataService.sharedData.items[0].body)
+
+          chartService.series = [];
+          for (var i=0; i < dataService.sharedData.items.length; i++){
+            chartService.series.push({
+              name: dataService.sharedData.items[i].name,
+              data: genArray(chartService.xAxis.categories, dataService.sharedData.items[i].body),
+              dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  x: 4,
+                  y: 10,
+                  style: {
+                      fontSize: '13px',
+                      fontFamily: 'Verdana, sans-serif',
+                      textShadow: '0 0 3px black',
+                  }
+              }
+            })
+          }
+          
           //chartService.series[last_idx].name = dataService.sharedData.items[last_idx].name
           //chartService.series[last_idx].data = objValues(dataService.sharedData.items[last_idx].body)
 
@@ -85,12 +91,24 @@
     });
 
   //for use when pushing items into chart
-  function objValues (obj) {
-    var results = []
-    for (var prop in obj) {
-      results.push(obj[prop])
+  function genArray(fields, item){
+    var array = [];
+    for (var i = 0; i<fields.length; i++){
+      array.push(item[fields[i]] || 0);
     }
-    return results;
+    return array;
+  }
+
+  function remakeCategories(prev, next){
+    var fields = [];
+  
+    fields = fields.concat(prev);
+    for (var prop in next){
+      if (fields.indexOf(prop) == -1){
+        fields.push(prop);
+      }
+    }
+    return fields;
   }
     
 

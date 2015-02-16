@@ -37,7 +37,7 @@
                       //bottomPadding : '15px'
                   }
                 },
-                categories: ['Solo']
+                categories: []
             },
             series: [],
             title: {
