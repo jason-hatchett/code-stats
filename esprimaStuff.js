@@ -22,6 +22,7 @@
   exports.analyzeCode = function (code) {
     var ast = esprima.parse(code);
     var functionsStats = {};
+    var statements = 0;
     var addStatsEntry = function(funcName) {
         if (!functionsStats[funcName]) {
             functionsStats[funcName] = 0;
@@ -74,11 +75,10 @@
         }
 
         if (node.type.indexOf("Statement") > -1){
-          addStatsEntry("TotalStatements");
-          functionsStats["TotalStatements"]++;
+          statements++;
         }
 
     });
     
-    return functionsStats;
+    return {stats: functionsStats, statements: statements};
   }

@@ -44,7 +44,8 @@
           
           var newItem = {
             name: my_name,
-            body: data.output,
+            body: data.output.stats,
+            statements: data.output.statements,
             code: my_code,
             screenShown: true
           }

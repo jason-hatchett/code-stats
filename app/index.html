@@ -20,6 +20,7 @@
             <div ng-repeat="item in items">
             <div ng-show="tab.isSet(item.name)">
               <h4>Code</h4>
+              <p>Statements: {{item.statements}}</p>
               <pre><code>{{item.code}}</code></pre>
             </div>
             </div>
