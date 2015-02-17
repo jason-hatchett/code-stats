@@ -1,0 +1,27 @@
+{
+  "name": "js-parsing",
+  "version": "1.0.0",
+  "description": "An app to analyze JS code snippets.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodejs server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jason-hatchett/code-stats.git"
+  },
+  "author": "Jason-Hatchett",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jason-hatchett/code-stats/issues"
+  },
+  "dependencies": {
+    "express": "~4.11.2",
+    "body-parser": "~1.12.0",
+    "esprima": "~2.0.0"
+  }
+  "engines": {
+    "node": "0.10.x"
+  }
+}
