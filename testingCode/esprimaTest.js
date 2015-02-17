@@ -1,7 +1,7 @@
 var esprima = require('esprima');
 var fs = require('fs');
 
-var file = 'zerosum_code.js'
+var file = 'glenn_code.js'
 var code = fs.readFileSync(file);
 
 
@@ -87,7 +87,7 @@ function analyzeCode(code) {
           functionsStats["Regex"]++;
         }
 
-        if (node.type.indexOf("Statement") > -1){
+        if (node.type && node.type.indexOf("Statement") > -1){
           addStatsEntry("TotalStatements");
           functionsStats["TotalStatements"]++;
         }

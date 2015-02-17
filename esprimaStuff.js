@@ -74,7 +74,7 @@
           functionsStats["Regex"]++;
         }
 
-        if (node.type.indexOf("Statement") > -1){
+        if (node.type && node.type.indexOf("Statement") > -1){
           statements++;
         }
 

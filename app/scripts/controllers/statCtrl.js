@@ -4,7 +4,29 @@
   angular.module('codeStats.controllers')
     .controller('StatController',function(dataService, $scope){
       $scope.items = dataService.sharedData.items;
+
     });
+
+    angular.module('codeStats.controllers')
+    .controller('GroupController',function(dataService, $scope){
+      
+
+      this.remakeGroups = function(){
+        var groups = [];
+        
+        for(var i=0 ; i < dataService.sharedData.items.length ;i++ ){
+          
+          if (groups.indexOf(dataService.sharedData.items[i].group) == -1){
+            groups.push(dataService.sharedData.items[i].group);
+          }
+        }
+        $scope.groups = groups;
+      }
+      
+     
+
+    });
+
 
   angular.module('codeStats.controllers')
     .controller('TabController',function(){
@@ -23,7 +45,7 @@
     .controller('TextController',function(dataService, chartService, $http){
       this.snippet = {};
 
-      this.addSnippet = function(){
+      this.addSnippet = function(callback){
         //actually want to push ajax result of post request
 
         var my_name = this.snippet.name;
@@ -46,13 +68,44 @@
             name: my_name,
             body: data.output.stats,
             statements: data.output.statements,
-            code: my_code,
-            screenShown: true
+            code: my_code
           }
-          dataService.sharedData.items.push(newItem);
-          //debugger
           chartService.xAxis.categories = remakeCategories(chartService.xAxis.categories, newItem.body)
-          //chartService.xAxis.categories = Object.keys(dataService.sharedData.items[0].body)
+          
+          //add groupings
+          if (chartService.series.length > 0){
+            var max=0.0;
+            var bestGroup = 0;
+            for (var i=0; i < dataService.sharedData.items.length; i++){
+              if (dataService.sharedData.items[i].group > bestGroup){
+                bestGroup = dataService.sharedData.items[i].group + 1
+              }
+            }
+            for (var i=0; i <  dataService.sharedData.items.length; i++){
+              var fields = chartService.xAxis.categories;
+              var arry1 = genArray(fields, dataService.sharedData.items[i].body);
+              var arry2 = genArray(fields, newItem.body);
+              arry1 = arry1.concat(dataService.sharedData.items[i].statements);
+              arry2 = arry2.concat(newItem.statements);
+              fields = fields.concat("Statements");
+              var compareResult = cosineCompare(arry1, arry2, fields);
+              console.log("CompareResult", compareResult)
+              if (compareResult > max && compareResult > 0.95){
+                max = compareResult;
+                bestGroup = dataService.sharedData.items[i].group;
+              }
+              console.log("Max", max);
+              
+            }
+            console.log("Group",bestGroup)
+            newItem.group = bestGroup;
+          }
+          else{
+            //default first group
+            newItem.group = 1;
+          }
+
+          dataService.sharedData.items.push(newItem);
 
           chartService.series = [];
           for (var i=0; i < dataService.sharedData.items.length; i++){
@@ -75,9 +128,7 @@
             })
           }
           
-          //chartService.series[last_idx].name = dataService.sharedData.items[last_idx].name
-          //chartService.series[last_idx].data = objValues(dataService.sharedData.items[last_idx].body)
-
+          callback()
         });
         this.snippet = {};
 
@@ -110,6 +161,31 @@
       }
     }
     return fields;
+  }
+
+  function cosineCompare(arr1, arr2, fields){
+    var array1 = [].concat(arr1);
+    var array2 = [].concat(arr2)
+    var sim =0.0;
+    var num = arr1.length;
+    var dot = 0.0;
+    var mag1 = 0.0;
+    var mag2 = 0.0;
+    for (var n=0 ;n < num; n++){
+      //add weightings
+      
+      if (fields[n] == "Regex" || fields[n] == "Functions" || fields[n] == "DeepestNested"){
+        array1[n] = array1[n] * 3; 
+        array2[n] = array2[n] * 3;
+      }
+
+
+      dot += array1[n] * array2[n];
+      mag1 += Math.pow(array1[n], 2);
+      mag2 += Math.pow(array2[n], 2);
+    }
+    return dot / (Math.sqrt(mag1) * Math.sqrt(mag2));
+  
   }
     
 
