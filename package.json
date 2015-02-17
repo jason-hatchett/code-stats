@@ -20,7 +20,7 @@
     "express": "~4.11.2",
     "body-parser": "~1.12.0",
     "esprima": "~2.0.0"
-  }
+  },
   "engines": {
     "node": "0.10.x"
   }
