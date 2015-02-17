@@ -54,7 +54,7 @@
               <accordion ng-repeat="item in items">
                 <accordion-group heading="Content For {{item.name}}" ng-show="tab.isSet(item.group)">
                   <p>Statements: {{item.statements}}</p>
-                  <pre><code>{{item.code}}</code></pre>
+                  <div hljs source="item.code"></div>
                 </accordion-group>
               </accordion>
               <br>
@@ -66,13 +66,13 @@
       
     </div>
 
-    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="vendors/jquery-2.1.3.min.js"></script>
     <script src="vendors/angular.js"></script>
     <script src="vendors/highcharts.js"></script>
     <script src="scripts/directives/highcharts-ng.js"></script>
     
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="vendors/bootstrap.min.js"></script>
+    <link href="vendors/bootstrap.min.css" rel="stylesheet">
     <script src="scripts/directives/ui-bootstrap-custom-0.12.0.js"></script>
     <script src="scripts/directives/ui-bootstrap-custom-0.12.0.min.js"></script>
     <script src="scripts/directives/ui-bootstrap-custom-tpls-0.12.0.js"></script>
@@ -81,6 +81,11 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/services/data.js"></script>
     <script src="scripts/controllers/statCtrl.js"></script>
+
+    <link rel="stylesheet" href="vendors/styles/default.css">
+    <script src="vendors/highlight.pack.js"></script>
+    <script src="scripts/directives/angular-highlightjs.min.js"></script>
+    
     
   </body>
 </html>

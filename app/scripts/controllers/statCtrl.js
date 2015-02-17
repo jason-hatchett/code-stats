@@ -127,7 +127,7 @@
               }
             })
           }
-          
+          hljs.initHighlightingOnLoad();
           callback()
         });
         this.snippet = {};
