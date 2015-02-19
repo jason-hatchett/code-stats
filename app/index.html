@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html ng-app="codeStats" >
   <head>
+    <link rel="icon" type="image/png" href="images/logo.png" />
     <title>Code Stats</title>
   </head>
   <body class="container-fluid">
     <div class="row">
-    <div class="col-md-4 col-md-offset-1">
-      <h1> Code Stats </h1>
+    <div class="col-md-4 col-md-offset-2">
+      <img src="images/logo.png"></img>
     </div>
     </div>
 
@@ -49,8 +50,9 @@
                 <li ng-repeat="g in groups" ng-class="{active:tab.isSet(g)}">
                   <a href ng-click="tab.setTab(g)">{{"Group " + g}}</a>
                 </li>
+                <br>
               </ul>
-              <br>
+              
               <accordion ng-repeat="item in items">
                 <accordion-group heading="Content For {{item.name}}" ng-show="tab.isSet(item.group)">
                   <p>Statements: {{item.statements}}</p>

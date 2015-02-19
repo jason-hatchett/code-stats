@@ -174,9 +174,13 @@
     for (var n=0 ;n < num; n++){
       //add weightings
       
-      if (fields[n] == "Regex" || fields[n] == "Functions" || fields[n] == "DeepestNested"){
-        array1[n] = array1[n] * 3; 
-        array2[n] = array2[n] * 3;
+      if (fields[n] == "Regex"){
+        array1[n] = array1[n] * 2; 
+        array2[n] = array2[n] * 2;
+      }
+      else if (fields[n] == "Functions" || fields[n] == "DeepestNested"){
+        array1[n] = array1[n] * 4; 
+        array2[n] = array2[n] * 4;
       }
 
 
